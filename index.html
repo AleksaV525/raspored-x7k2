@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="sr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Raspored časova</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2f4bff"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#edf0f5;--card:#fff;--tx:#12203a;--mu:#6a7590;--ln:#dde2ec;--ac:#2f4bff;--acb:#fff;--live:#d8f34a;--livetx:#1b2400;--pr:#e8ecff;--prt:#2f4bff;--as:#fff1d6;--ast:#9a5b00;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1220;--card:#161d30;--tx:#eef1fa;--mu:#8f9ab8;--ln:#26304a;--ac:#6f85ff;--acb:#0d1220;--pr:#232d57;--prt:#a9b6ff;--as:#3a2c12;--ast:#ffc772;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1220;--card:#161d30;--tx:#eef1fa;--mu:#8f9ab8;--ln:#26304a;--ac:#6f85ff;--acb:#0d1220;--pr:#232d57;--prt:#a9b6ff;--as:#3a2c12;--ast:#ffc772;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:520px;margin:0 auto;padding:18px 16px 110px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px}
+.top h1{margin:0;font-size:15px;font-weight:600;color:var(--mu)}
+.top .dt{font-size:22px;font-weight:800;letter-spacing:-.02em}
+#clock{font-size:40px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:12px}
+.tab{border:0;background:var(--card);color:var(--mu);font:700 14px inherit;font-family:inherit;padding:11px 0;border-radius:12px;position:relative}
+.tab.on{background:var(--ac);color:var(--acb)}
+.tab.td::after{content:"";position:absolute;top:5px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--live)}
+.tab.td:not(.on)::after{background:var(--ac)}
+.bar{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mu);margin:0 2px 10px}
+.sw{display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--mu);font:600 13px inherit;font-family:inherit;padding:4px 0}
+.sw i{width:34px;height:20px;border-radius:10px;background:var(--ln);position:relative;transition:background .2s}
+.sw i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw.on i{background:var(--ac)}.sw.on i::after{transform:translateX(14px)}
+.banner{background:var(--tx);color:var(--bg);border-radius:16px;padding:14px 16px;margin-bottom:14px}
+.banner.live{background:var(--live);color:var(--livetx)}
+.banner b{display:block;font-size:18px;letter-spacing:-.01em}
+.banner span{font-size:14px;opacity:.8}
+.card{background:var(--card);border-radius:18px;padding:14px 14px 6px;margin-bottom:12px;border:2px solid transparent}
+.card.live{border-color:var(--live)}
+.gh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.gh b{font-size:22px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.gh span{font-size:13px;color:var(--mu);font-weight:600}
+.row{display:grid;grid-template-columns:18px 1fr auto;gap:10px;padding:10px 0;cursor:pointer;position:relative;width:100%;border:0;background:none;color:inherit;font:inherit;text-align:left}
+.row+.row{border-top:1px dashed var(--ln)}
+.dot{position:relative}
+.dot::before{content:"";position:absolute;left:3px;top:6px;width:12px;height:12px;border-radius:50%;border:3px solid var(--ac);background:var(--card)}
+.row.on .dot::before{background:var(--live);border-color:var(--tx)}
+.row.done{opacity:.45}
+.nm{font-weight:700;font-size:16px}
+.tm{font-size:13px;color:var(--mu);font-variant-numeric:tabular-nums;margin-top:1px}
+.pr{height:5px;border-radius:3px;background:var(--ln);margin-top:8px;overflow:hidden}
+.pr u{display:block;height:100%;background:var(--ac);border-radius:3px}
+.rt{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.room{font-weight:800;font-size:18px;letter-spacing:-.02em}
+.chip{font-size:12px;font-weight:700;padding:2px 8px;border-radius:8px;background:var(--pr);color:var(--prt)}
+.chip.a{background:var(--as);color:var(--ast)}
+.empty{text-align:center;color:var(--mu);padding:50px 20px}
+.empty b{display:block;color:var(--tx);font-size:18px;margin-bottom:4px}
+.fab{position:fixed;right:max(18px,calc(50% - 242px));bottom:calc(20px + env(safe-area-inset-bottom,0px));border:0;background:var(--ac);color:var(--acb);height:56px;padding:0 22px;border-radius:28px;font:800 16px inherit;font-family:inherit;box-shadow:0 8px 24px rgba(30,50,200,.35)}
+.ov{position:fixed;inset:0;background:rgba(8,12,28,.55);display:none;align-items:flex-end;justify-content:center;z-index:20}
+.ov.show{display:flex}
+.sh{background:var(--card);width:100%;max-width:520px;border-radius:24px 24px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow:auto}
+.sh h2{margin:0 0 12px;font-size:20px}
+.fl{display:block;font-size:13px;font-weight:700;color:var(--mu);margin:12px 0 5px}
+.in{width:100%;border:2px solid var(--ln);background:var(--bg);color:var(--tx);border-radius:12px;padding:12px;font:600 16px inherit;font-family:inherit}
+.in:focus{outline:none;border-color:var(--ac)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.seg button{border:2px solid var(--ln);background:var(--bg);color:var(--mu);border-radius:12px;padding:12px;font:700 15px inherit;font-family:inherit}
+.seg button.on{border-color:var(--ac);color:var(--ac)}
+.pv{margin-top:12px;font-weight:800;font-size:18px;font-variant-numeric:tabular-nums}
+.er{color:#d6293e;font-size:14px;font-weight:600;min-height:20px;margin-top:4px}
+.acts{display:flex;gap:8px;margin-top:10px}
+.acts button{flex:1;border:0;border-radius:14px;padding:14px;font:800 16px inherit;font-family:inherit;background:var(--bg);color:var(--tx)}
+.acts .sv{flex:2;background:var(--ac);color:var(--acb)}
+.acts .dl{color:#d6293e;flex:1}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+</style></head><body>
+<div class="wrap">
+  <div class="top"><div><h1>Raspored časova</h1><div class="dt" id="date"></div></div><div id="clock"></div></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="bar"><span id="sum"></span><button class="sw" id="sw"><span>Spoji u blok</span><i></i></button></div>
+  <div id="banner"></div>
+  <div id="list"></div>
+</div>
+<button class="fab" id="add">+ Dodaj čas</button>
+<div class="ov" id="ov"><div class="sh">
+  <h2 id="ttl">Novi čas</h2>
+  <label class="fl" for="fn">Predmet (nije obavezno)</label><input class="in" id="fn" placeholder="npr. Matematika 1">
+  <label class="fl" for="fr">Učionica</label><input class="in" id="fr" placeholder="npr. 204">
+  <div class="fl">Drži</div>
+  <div class="seg" id="role"><button data-r="P">Profesor</button><button data-r="A">Asistent</button></div>
+  <div class="g2">
+    <div><label class="fl" for="fd">Dan</label><select class="in" id="fd"></select></div>
+    <div><label class="fl" for="fh">Počinje u</label><select class="in" id="fh"></select></div>
+  </div>
+  <label class="fl" for="fnn">Uzastopnih časova</label><select class="in" id="fnn"></select>
+  <div class="pv" id="pv"></div><div class="er" id="er"></div>
+  <div class="acts"><button class="dl" id="dl">Obriši</button><button id="cn">Otkaži</button><button class="sv" id="sv">Sačuvaj</button></div>
+</div></div>
+<script>
+const DN=['Ponedeljak','Utorak','Sreda','Četvrtak','Petak','Subota'],SN=['Pon','Uto','Sre','Čet','Pet','Sub'];
+const MN=['januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar'];
+const KEY='raspored.v1';
+let st={items:[],merge:true};
+try{const r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const $=s=>document.querySelector(s);
+const p2=n=>String(n).padStart(2,'0'),fm=m=>p2(Math.floor(m/60))+':'+p2(m%60);
+const S0=i=>i.h*60+15,E0=i=>(i.h+i.n)*60;
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dur=m=>m>=60?Math.floor(m/60)+' h'+(m%60?' '+m%60+' min':''):m+' min';
+const cas=n=>n==1?'čas':(n<=4?'časa':'časova');
+const ti=()=>(new Date().getDay()+6)%7;
+let sel=ti()===6?0:ti();
+let editId=null,role='P';
+
+function groups(list){const g=[];list.forEach(it=>{const l=g[g.length-1];if(st.merge&&l&&l[l.length-1].h+l[l.length-1].n===it.h)l.push(it);else g.push([it])});return g}
+
+function render(){
+  const now=new Date(),nm=now.getHours()*60+now.getMinutes(),T=ti(),isT=sel===T;
+  $('#clock').textContent=fm(nm);
+  $('#date').textContent=(DN[T]||'Nedelja')+', '+now.getDate()+'. '+MN[now.getMonth()];
+  $('#tabs').innerHTML=SN.map((s,i)=>`<button class="tab${i===sel?' on':''}${i===T?' td':''}" data-d="${i}">${s}</button>`).join('');
+  $('#sw').className='sw'+(st.merge?' on':'');
+  const list=st.items.filter(i=>i.d===sel).sort((a,b)=>a.h-b.h);
+  const total=list.reduce((s,i)=>s+i.n,0);
+  $('#sum').textContent=list.length?`${DN[sel]}: ${total} ${cas(total)}, ${fm(S0(list[0]))}–${fm(E0(list[list.length-1]))}`:DN[sel];
+  // banner
+  let bn='';
+  if(isT&&list.length){
+    const act=list.find(i=>S0(i)<=nm&&nm<E0(i));
+    const inClass=act&&((nm-S0(act))%60<45);
+    if(inClass){const end=S0(act)+(Math.floor((nm-S0(act))/60)*60)+45;
+      bn=`<div class="banner live"><b>Traje čas · učionica ${esc(act.room)||'?'}</b><span>Završava se u ${fm(end)}, za ${dur(end-nm)}</span></div>`}
+    else{const nx=list.find(i=>S0(i)>nm)||(act?{h:act.h+Math.floor((nm-S0(act))/60)+1,room:act.room}:null);
+      const nxs=nx?nx.h*60+15:0;
+      if(nx&&nxs>nm){const brk=list.some(i=>E0(i)<=nm)||!!act;
+        bn=`<div class="banner"><b>${brk?'Pauza · sledeći čas u '+fm(nxs):'Prvi čas u '+fm(nxs)}</b><span>Za ${dur(nxs-nm)} · učionica ${esc(nx.room)||'?'}</span></div>`}
+      else bn=`<div class="banner"><b>Gotovo za danas</b><span>Nema više časova.</span></div>`}
+  }else if(isT)bn=`<div class="banner"><b>Slobodan dan</b><span>Nema upisanih časova.</span></div>`;
+  $('#banner').innerHTML=bn;
+  // cards
+  if(!list.length){$('#list').innerHTML=`<div class="empty"><b>Nema časova</b>Dodirni „Dodaj čas“ da upišeš prvi za ${DN[sel].toLowerCase()}.</div>`;return}
+  $('#list').innerHTML=groups(list).map(g=>{
+    const s=S0(g[0]),e=E0(g[g.length-1]),cnt=g.reduce((a,i)=>a+i.n,0),live=isT&&nm>=s&&nm<e;
+    const rows=g.map(i=>{
+      const a=S0(i),b=E0(i),on=isT&&nm>=a&&nm<b,dn=isT&&nm>=b;
+      const pct=on?Math.min(100,Math.max(0,(nm-a)/(b-a)*100)):0;
+      const tm=(g.length>1||i.n>1)?`<div class="tm">${fm(a)} – ${fm(b)}${i.n>1?' · '+i.n+' '+cas(i.n):''}</div>`:'';
+      return `<button class="row${on?' on':''}${dn?' done':''}" data-id="${i.id}"><div class="dot"></div><div><div class="nm">${esc(i.name)||(i.role==='A'?'Vežbe':'Predavanje')}</div>${tm}${on?`<div class="pr"><u style="width:${pct}%"></u></div>`:''}</div><div class="rt"><span class="room">${esc(i.room)||'—'}</span><span class="chip${i.role==='A'?' a':''}">${i.role==='A'?'Asistent':'Profesor'}</span></div></button>`}).join('');
+    return `<div class="card${live?' live':''}"><div class="gh"><b>${fm(s)} – ${fm(e)}</b><span>${cnt} ${cas(cnt)}</span></div>${rows}</div>`}).join('');
+}
+
+// sheet
+function fillSel(){
+  $('#fd').innerHTML=DN.map((d,i)=>`<option value="${i}">${d}</option>`).join('');
+  let h='';for(let x=6;x<=21;x++)h+=`<option value="${x}">${fm(x*60+15)}</option>`;$('#fh').innerHTML=h;
+  let n='';for(let x=1;x<=6;x++)n+=`<option value="${x}">${x} ${cas(x)}</option>`;$('#fnn').innerHTML=n;
+}
+function cur(){return{d:+$('#fd').value,h:+$('#fh').value,n:+$('#fnn').value}}
+function check(){
+  const c=cur(),s=S0(c),e=E0(c);
+  $('#pv').textContent=fm(s)+' – '+fm(e);
+  const bad=st.items.some(i=>i.id!==editId&&i.d===c.d&&S0(i)<e&&s<E0(i));
+  $('#er').textContent=bad?'Preklapa se sa drugim časom tog dana.':'';
+  $('#sv').disabled=bad;$('#sv').style.opacity=bad?.4:1;
+}
+function setRole(r){role=r;document.querySelectorAll('#role button').forEach(b=>b.classList.toggle('on',b.dataset.r===r))}
+function openSheet(id){
+  editId=id||null;const it=id?st.items.find(i=>i.id===id):null;
+  $('#ttl').textContent=it?'Izmeni čas':'Novi čas';
+  const dayL=st.items.filter(i=>i.d===sel).sort((a,b)=>a.h-b.h),last=dayL[dayL.length-1];
+  $('#fn').value=it?it.name:'';$('#fr').value=it?it.room:'';
+  $('#fd').value=it?it.d:sel;$('#fh').value=it?it.h:(last?Math.min(21,last.h+last.n):8);
+  $('#fnn').value=it?it.n:1;setRole(it?it.role:'P');
+  $('#dl').style.display=it?'':'none';
+  $('#ov').classList.add('show');check();
+}
+const closeSheet=()=>$('#ov').classList.remove('show');
+fillSel();
+['fd','fh','fnn'].forEach(k=>$('#'+k).addEventListener('change',check));
+$('#role').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setRole(b.dataset.r)});
+$('#add').onclick=()=>openSheet();
+$('#cn').onclick=closeSheet;
+$('#ov').addEventListener('click',e=>{if(e.target.id==='ov')closeSheet()});
+$('#sv').onclick=()=>{
+  const c=cur(),o={name:$('#fn').value.trim(),room:$('#fr').value.trim(),role,...c};
+  if(editId){const i=st.items.find(x=>x.id===editId);Object.assign(i,o)}
+  else st.items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),...o});
+  save();sel=c.d;closeSheet();render();
+};
+$('#dl').onclick=()=>{st.items=st.items.filter(i=>i.id!==editId);save();closeSheet();render()};
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(b){sel=+b.dataset.d;render()}});
+$('#list').addEventListener('click',e=>{const b=e.target.closest('.row');if(b)openSheet(b.dataset.id)});
+$('#sw').onclick=()=>{st.merge=!st.merge;save();render()};
+let tx=null;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{if(tx===null||$('#ov').classList.contains('show'))return;const dx=e.changedTouches[0].clientX-tx;tx=null;
+  if(dx>70&&sel>0){sel--;render()}else if(dx<-70&&sel<5){sel++;render()}},{passive:true});
+render();setInterval(render,20000);
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+</script></body></html>
