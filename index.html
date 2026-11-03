@@ -4,9 +4,9 @@
 <title>Raspored časova</title>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#1f5a53"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Raspored"><meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
-:root{--bg:#f1f3f4;--card:#fff;--tx:#18222b;--mu:#66727c;--ln:#e2e6e8;--ac:#2b6a62;--acs:#e0eeeb;--acb:#fff;--cht:#1f544d;--as:#f1ebdc;--ast:#6b5a2b;--er:#c0392b;--sh:0 1px 2px rgba(20,40,40,.05),0 6px 20px rgba(20,40,40,.05);--c0:#2b8a7e;--c1:#5b6bd6;--c2:#d9902f;--c3:#d1566f;--c4:#8a62c9;--c5:#5d7285;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1113;--card:#161c1f;--tx:#e8eef0;--mu:#8c979d;--ln:#262e32;--ac:#6cc0b2;--acs:#1b3330;--acb:#0a1815;--cht:#9fdacf;--as:#2a2518;--ast:#d9c690;--er:#ff7b6b;--sh:none;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d1113;--card:#161c1f;--tx:#e8eef0;--mu:#8c979d;--ln:#262e32;--ac:#6cc0b2;--acs:#1b3330;--acb:#0a1815;--cht:#9fdacf;--as:#2a2518;--ast:#d9c690;--er:#ff7b6b;--sh:none;color-scheme:dark}
+:root{--bg:#eff3f2;--card:#fff;--tx:#18222b;--mu:#66727c;--ln:#e1e6e5;--ac:#2b6a62;--acs:#e0eeeb;--acb:#fff;--cht:#1f544d;--as:#f1ebdc;--ast:#6b5a2b;--er:#c0392b;--sh:0 1px 2px rgba(20,40,40,.04),0 8px 24px rgba(20,40,40,.06);--c0:#2b8a7e;--c1:#5b6bd6;--c2:#d9902f;--c3:#d1566f;--c4:#8a62c9;--c5:#5d7285;--ex:#c23b57;--exs:#fcebee;--ko:#b8730b;--kos:#fdf1d9;--fbt:#fff;--navbg:rgba(255,255,255,.84);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171e20;--card:#202a2c;--tx:#dbe4e2;--mu:#93a19f;--ln:#2e3a3c;--ac:#82cbbd;--acs:#27403f;--acb:#0f1f1c;--cht:#a9e0d4;--as:#302a1c;--ast:#dcc58a;--er:#ef8c7d;--sh:none;--c0:#5bbcad;--c1:#98a2ea;--c2:#e3ae62;--c3:#e2889b;--c4:#b39be2;--c5:#93a6b8;--ex:#ef8fa3;--exs:#35272d;--ko:#e6b768;--kos:#342e1e;--fbt:#1b1416;--navbg:rgba(32,42,44,.85);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171e20;--card:#202a2c;--tx:#dbe4e2;--mu:#93a19f;--ln:#2e3a3c;--ac:#82cbbd;--acs:#27403f;--acb:#0f1f1c;--cht:#a9e0d4;--as:#302a1c;--ast:#dcc58a;--er:#ef8c7d;--sh:none;--c0:#5bbcad;--c1:#98a2ea;--c2:#e3ae62;--c3:#e2889b;--c4:#b39be2;--c5:#93a6b8;--ex:#ef8fa3;--exs:#35272d;--ko:#e6b768;--kos:#342e1e;--fbt:#1b1416;--navbg:rgba(32,42,44,.85);color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
 body{background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;padding-top:env(safe-area-inset-top,0px)}
@@ -53,9 +53,11 @@ h1{margin:0;font-size:clamp(28px,8vw,36px);font-weight:700;letter-spacing:-.03em
 .chip{font-size:12px;font-weight:600;padding:2px 9px;border-radius:8px;background:var(--acs);color:var(--cht)}
 .chip.a{background:var(--as);color:var(--ast)}
 .empty{text-align:center;color:var(--mu);padding:56px 20px;grid-column:1/-1}
+.lk{display:block;margin:16px auto 0;border:0;background:var(--acs);color:var(--cht);font:600 14px inherit;font-family:inherit;padding:10px 16px;border-radius:12px}
+.wn{color:var(--ast);background:var(--as);border-radius:10px;padding:8px 12px;font-size:14px;margin-top:10px}
 .empty b{display:block;color:var(--tx);font-size:17px;margin-bottom:4px}
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--ln);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));z-index:10}
-.nv{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.nv{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
 .tab{border:0;background:none;color:var(--mu);font:600 12px inherit;font-family:inherit;padding:6px 0 4px;display:flex;flex-direction:column;align-items:center;gap:3px}
 .tab em{font-style:normal;font-size:16px;font-weight:700;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:var(--tx);font-variant-numeric:tabular-nums;transition:background .2s}
 .tab.td em{box-shadow:inset 0 0 0 1.5px var(--ac)}
@@ -111,7 +113,7 @@ html{-webkit-text-size-adjust:100%}body{overscroll-behavior-y:none}input.in[type
 .cg i{font-style:normal;font-size:12px;color:var(--mu);padding:4px 0}
 .cg button{aspect-ratio:1;border:0;border-radius:50%;background:none;color:var(--tx);font:600 14px inherit;font-family:inherit}
 .cg button.o{color:var(--mu);opacity:.5}.cg button.t{box-shadow:inset 0 0 0 1.5px var(--ac)}.cg button.on{background:var(--ac);color:var(--acb);opacity:1}
-.mg{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .mc{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:7px 3px;min-height:66px;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--tx);font:600 15px inherit;font-family:inherit}
 .mc.o{opacity:.4}.mc.t{border-color:var(--ac);box-shadow:0 0 0 2px var(--acs)}
 .mc div{display:flex;gap:3px;flex-wrap:wrap;justify-content:center}.mc u{width:7px;height:7px;border-radius:50%;background:var(--cc)}
@@ -119,15 +121,51 @@ html{-webkit-text-size-adjust:100%}body{overscroll-behavior-y:none}input.in[type
 .mg,.mh{grid-column:auto}#list.mw{display:block}
 ::selection{background:var(--acs)}input{caret-color:var(--ac)}
 @media print{.hb,.vs,.ar,nav,.toast,.sw,.ov{display:none!important}body{background:#fff}.card{box-shadow:none}}
+
+body{background:radial-gradient(110% 45% at 50% -6%,var(--acs),transparent 70%) no-repeat,var(--bg)}
+nav{background:var(--navbg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.sh::before{content:"";display:block;width:38px;height:4px;border-radius:2px;background:var(--ln);margin:-8px auto 14px}
+.toast{background:#24312f;color:#eef4f2}.toast button{color:#8fd6c8;filter:none}
+.sub{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ar{align-items:center}.ar .pill{height:36px;padding:0 12px;font-size:13px}
+.sm{color:var(--mu);font-size:13px;margin:0 4px 10px;min-height:18px}
+.fb{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 4px;border-radius:9px;font:800 11px/1 system-ui,sans-serif;font-style:normal;color:var(--fbt);background:var(--ex)}
+.fb.k{background:var(--ko)}
+.dh .fb{margin-left:8px;vertical-align:2px}
+.gh .gt{font-size:inherit;color:inherit;display:flex;align-items:center;gap:8px}
+.tab em{position:relative}
+.tf{position:absolute;top:-5px;right:-9px;display:flex;gap:1px}
+.tf .fb{min-width:15px;height:15px;font-size:9.5px;padding:0 3px;border:1.5px solid var(--card)}
+.mc{position:relative}.mc .tf{top:4px;right:4px}.mc .tf .fb{border:0}
+.mc.ex{border-color:var(--ex);background:var(--exs)}.mc.ko{border-color:var(--ko);background:var(--kos)}
+.row.ex,.row.ko{border-radius:14px;padding:11px 10px;margin:2px -4px;width:calc(100% + 8px)}
+.row.ex{--cc:var(--ex)!important;background:var(--exs)}.row.ko{--cc:var(--ko)!important;background:var(--kos)}
+.chip.ex{background:var(--ex);color:var(--fbt)}.chip.ko{background:var(--ko);color:var(--fbt)}
+.i{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.mh2{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}.mh2 h2{margin:0}
+.ms{font-size:12px;font-weight:700;color:var(--mu);letter-spacing:.05em;text-transform:uppercase;margin:18px 4px 8px}
+.mg2{background:var(--bg);border-radius:16px;overflow:hidden}
+.mr{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;color:var(--tx);padding:13px 14px;text-align:left;font:inherit}
+.mr+.mr{border-top:1px solid var(--ln)}
+.mr .i{color:var(--ac)}.mr>span{flex:1;min-width:0}.mr b{display:block;font-weight:600;font-size:15px}.mr small{display:block;color:var(--mu);font-size:12.5px;margin-top:1px}
+.mr.r,.mr.r .i{color:var(--er)}
+.seg2{display:flex;gap:3px;background:var(--card);padding:3px;border-radius:11px;flex:none}
+.seg2 button{border:0;background:none;color:var(--mu);padding:7px 11px;border-radius:8px;font:600 13px inherit;font-family:inherit}
+.seg2 button.on{background:var(--ac);color:var(--acb)}
+.tg2{width:38px;height:23px;border-radius:12px;background:var(--ln);position:relative;flex:none;transition:background .2s}
+.tg2::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .2s}
+.tg2.on{background:var(--ac)}.tg2.on::after{transform:translateX(15px)}
+.th button{display:flex;align-items:center;justify-content:center;gap:7px}.th .i{width:18px;height:18px}
 </style></head><body>
 <div class="wrap">
   <header><div><h1 id="day"></h1><div class="sub" id="date"></div></div>
-    <div class="hb"><button class="pill" id="td" hidden>Danas</button>
+    <div class="hb"><button class="ib g" id="thb" aria-label="Promeni temu"></button>
     <button class="ib" id="add" aria-label="Dodaj termin"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
     <button class="ib g" id="mn" aria-label="Podešavanja"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></div></header>
   <div class="seg vs" id="vs" style="--n:3"><button data-v="d">Dan</button><button data-v="w">Nedelja</button><button data-v="m">Mesec</button></div>
   <div id="banner"></div>
-  <div class="bar"><div class="ar"><button class="ab" data-s="-1" aria-label="Nazad">‹</button><button class="ab" data-s="1" aria-label="Napred">›</button></div><span id="sum" style="flex:1;margin-left:10px"></span><button class="sw" id="sw"><span>Spoji u blok</span><i></i></button></div>
+  <div class="bar"><div class="ar"><button class="ab" data-s="-1" aria-label="Nazad">‹</button><button class="pill" id="td">Danas</button><button class="ab" data-s="1" aria-label="Napred">›</button></div><span style="flex:1"></span><button class="sw" id="sw"><span>Spoji u blok</span><i></i></button></div>
+  <div class="sm" id="sum"></div>
   <div id="list"></div>
 </div>
 <nav id="nav"><div class="nv" id="tabs"></div></nav>
@@ -137,9 +175,11 @@ html{-webkit-text-size-adjust:100%}body{overscroll-behavior-y:none}input.in[type
 <div class="ov" id="ov"><div class="sh" id="fb"></div></div>
 <div class="ov" id="ov2"><div class="sh" id="mb"></div></div>
 <script>
-const DN=['Ponedeljak','Utorak','Sreda','Četvrtak','Petak','Subota'],SN=['Pon','Uto','Sre','Čet','Pet','Sub'];
+const DN=['Ponedeljak','Utorak','Sreda','Četvrtak','Petak','Subota','Nedelja'],SN=['Pon','Uto','Sre','Čet','Pet','Sub','Ned'];
 const MN=['januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar'];
 const TY={p:'Predavanje',v:'Vežbe',l:'Laboratorija',k:'Konsultacije',o:'Kolokvijum',i:'Ispit',b:'Odbrana',r:'Predaja rada',x:'Ostalo'};
+const IC={half:'<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',print:'<path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="7" rx="1"/>',down:'<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',up:'<path d="M12 16V5M7 9l5-5 5 5M5 20h14"/>',trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>'};
+const svg=n=>`<svg class="i" viewBox="0 0 24 24">${IC[n]}</svg>`;
 const KD={w:'Svake nedelje',b:'Svake 2. nedelje',e:'Parne nedelje',n:'Neparne nedelje',t:'Samo ove nedelje',d:'Tačan datum',p:'Period',m:'Datumi'};
 const KEY='raspored.v1',$=s=>document.querySelector(s);
 const p2=n=>String(n).padStart(2,'0'),fm=m=>p2(Math.floor(m/60))+':'+p2(m%60);
@@ -162,7 +202,8 @@ migrate(st.items);
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 const par=d=>{const e=st.pw.e;return wdiff(d,pd(st.pw.m))%2===0?e:!e};
 const E0=o=>o.s+(o.it.n-1)*60+45;
-const fix=d=>wk(d)===6?addD(d,1):d;
+const fix=d=>d;
+const FL=d=>{const l=occ(d).filter(o=>!o.gone);return (l.some(o=>o.it.t==='i')?'<i class="fb">I</i>':'')+(l.some(o=>o.it.t==='o')?'<i class="fb k">K</i>':'')};
 let cd=fix(T0()),vw='d',F=null,AO=null,IMP=null,lastK='',undo=null,tmr,ovP=false,skip=0;
 
 function has(it,d){const k=dk(d),K=it.k;
@@ -181,15 +222,15 @@ function occ(d){const k=dk(d),o=[];
 function groups(L){const g=[];L.forEach(o=>{const l=g[g.length-1],p=l&&l[l.length-1];if(st.merge&&p&&!p.gone&&!o.gone&&p.s+p.it.n*60===o.s)l.push(o);else g.push([o])});return g}
 const lst=(d,isT,nm)=>{let L=occ(d);if(st.hd&&isT)L=L.filter(o=>E0(o)>nm);return L};
 function cards(L,isT,nm,dd){let out='',pe=null;
-  groups(L).forEach(g=>{const s=g[0].s,e=E0(g[g.length-1]),cnt=g.reduce((a,o)=>a+(o.gone?0:o.it.n),0),live=isT&&!g[0].gone&&nm>=s&&nm<e;
+  groups(L).forEach(g=>{const fx=g.some(o=>!o.gone&&o.it.t==='i'),fk=g.some(o=>!o.gone&&o.it.t==='o'),s=g[0].s,e=E0(g[g.length-1]),cnt=g.reduce((a,o)=>a+(o.gone?0:o.it.n),0),live=isT&&!g[0].gone&&nm>=s&&nm<e;
     if(pe!==null&&s>pe)out+=`<div class="gap">Slobodno ${dur(s-pe)}</div>`;pe=e;
-    const rows=g.map(o=>{const it=o.it,a=o.s,b=E0(o),on=isT&&!o.gone&&nm>=a&&nm<b,dn=isT&&nm>=b,pct=on?Math.min(100,(nm-a)/(b-a)*100):0;
+    const rows=g.map(o=>{const it=o.it,xc=o.gone?'':it.t==='i'?'ex':it.t==='o'?'ko':'',a=o.s,b=E0(o),on=isT&&!o.gone&&nm>=a&&nm<b,dn=isT&&nm>=b,pct=on?Math.min(100,(nm-a)/(b-a)*100):0;
       const tm=(g.length>1||it.n>1||o.mv)?`<div class="tm">${fm(a)} – ${fm(b)}${it.n>1?' · '+it.n+' '+cas(it.n):''}</div>`:'';
-      return `<button class="row${on?' on':''}${dn?' done':''}${o.gone?' gone':''}" style="--cc:var(--c${it.c||0})" data-id="${it.id}" data-ok="${o.k}" data-dd="${dd}"><div class="dot"></div><div><div class="nm">${esc(it.name)||TY[it.t||'p']}${o.mv?'<span class="bd">Pomereno</span>':''}${o.gone?`<span class="bd">${o.gone}</span>`:''}</div>${it.teacher?`<div class="tc">${it.role==='A'?'Asist.':'Prof.'} ${esc(it.teacher)}</div>`:''}${tm}${on?`<div class="pr"><u style="width:${pct}%"></u></div>`:''}</div><div class="rt"><span class="room">${esc(o.room)||'—'}</span><span class="chip${it.role==='A'?' a':''}">${TY[it.t||'p']}${it.g?' · '+esc(it.g):''}</span></div></button>`}).join('');
-    out+=`<div class="card${live?' live':''}"><div class="gh"><b>${fm(s)} – ${fm(e)}</b><span>${cnt?cnt+' '+cas(cnt):''}</span></div>${rows}</div>`});
+      return `<button class="row${on?' on':''}${dn?' done':''}${o.gone?' gone':''}${xc?' '+xc:''}" style="--cc:var(--c${it.c||0})" data-id="${it.id}" data-ok="${o.k}" data-dd="${dd}"><div class="dot"></div><div><div class="nm">${esc(it.name)||TY[it.t||'p']}${o.mv?'<span class="bd">Pomereno</span>':''}${o.gone?`<span class="bd">${o.gone}</span>`:''}</div>${it.teacher?`<div class="tc">${it.role==='A'?'Asist.':'Prof.'} ${esc(it.teacher)}</div>`:''}${tm}${on?`<div class="pr"><u style="width:${pct}%"></u></div>`:''}</div><div class="rt"><span class="room">${esc(o.room)||'—'}</span><span class="chip${xc?' '+xc:it.role==='A'?' a':''}">${TY[it.t||'p']}${it.g?' · '+esc(it.g):''}</span></div></button>`}).join('');
+    out+=`<div class="card${live?' live':''}"><div class="gh"><span class="gt"><b>${fm(s)} – ${fm(e)}</b>${fx?'<i class="fb">I</i>':''}${fk?'<i class="fb k">K</i>':''}</span><span>${cnt?cnt+' '+cas(cnt):''}</span></div>${rows}</div>`});
   return out}
 function bn(all,nm){
-  if(!all.length)return `<div class="banner"><b>Slobodan dan</b><span>Nema upisanih časova.</span></div>`;
+  if(!all.length)return '';
   const act=all.find(o=>o.s<=nm&&nm<E0(o));
   if(act&&((nm-act.s)%60<45)){const end=act.s+Math.floor((nm-act.s)/60)*60+45;
     return `<div class="banner live"><b>Traje čas · učionica ${esc(act.room)||'?'}</b><span>Završava se u ${fm(end)}, za ${dur(end-nm)}</span></div>`}
@@ -201,29 +242,30 @@ function bn(all,nm){
 function render(){
   const now=new Date(),nm=now.getHours()*60+now.getMinutes(),T=dk(now),isT=dk(cd)===T,m0=mon(cd);
   document.querySelectorAll('#vs button').forEach(b=>b.classList.toggle('on',b.dataset.v===vw));
-  $('#nav').hidden=vw!=='d';$('#td').hidden=isT;$('#banner').innerHTML='';
+  $('#nav').hidden=vw!=='d';$('#td').style.visibility=isT?'hidden':'visible';$('#banner').innerHTML='';
   let h='',sum='';
   if(vw==='d'){
-    $('#day').textContent=DN[wk(cd)];$('#date').textContent=cd.getDate()+'. '+MN[cd.getMonth()]+(isT?' · '+fm(nm):'');
+    $('#day').textContent=DN[wk(cd)];$('#date').innerHTML=cd.getDate()+'. '+MN[cd.getMonth()]+(isT?' · '+fm(nm):'')+FL(cd);
     const all=occ(cd).filter(o=>!o.gone),tot=all.reduce((s,o)=>s+o.it.n,0),l=lst(cd,isT,nm);
     sum=all.length?`${tot} ${cas(tot)} · ${fm(all[0].s)}–${fm(E0(all[all.length-1]))}`:'Nema časova';
     if(isT)$('#banner').innerHTML=bn(all,nm);
-    h=l.length?cards(l,isT,nm,dk(cd)):`<div class="empty"><b>Nema časova</b>Dodirni + da dodaš termin.</div>`;
+    const MS=['Nema predavanja ni obaveza. Uživaj u slobodnom danu.','Čist raspored. Odmori se ili nadoknadi gradivo.','Ništa ne piše za ovaj dan. Iskoristi ga kako ti odgovara.'];
+    h=l.length?cards(l,isT,nm,dk(cd)):all.length?`<div class="empty"><b>Sve odrađeno</b>Završeni časovi su sakriveni.</div>`:`<div class="empty"><b>Slobodan dan</b>${MS[cd.getDate()%3]}<button class="lk" data-lk="1">Pošalji raspored kolegi →</button></div>`;
   }else if(vw==='w'){
-    $('#day').textContent='Nedelja';$('#date').textContent=fd(m0)+' – '+fd(addD(m0,5))+' · '+(par(m0)?'parna':'neparna');
-    let tot=0;for(let i=0;i<6;i++){const d=addD(m0,i),it=dk(d)===T,l=lst(d,it,nm);tot+=occ(d).filter(o=>!o.gone).reduce((s,o)=>s+o.it.n,0);
-      h+=`<div class="dh">${DN[i]}<small>${fd(d)}</small></div>`+(l.length?cards(l,it,nm,dk(d)):'<div class="emp">Slobodan dan</div>')}
+    $('#day').textContent='Nedelja';$('#date').textContent=fd(m0)+' – '+fd(addD(m0,6))+' · '+(par(m0)?'parna':'neparna');
+    let tot=0;for(let i=0;i<7;i++){const d=addD(m0,i),it=dk(d)===T,l=lst(d,it,nm);tot+=occ(d).filter(o=>!o.gone).reduce((s,o)=>s+o.it.n,0);
+      h+=`<div class="dh">${DN[i]}<small>${fd(d)}</small>${FL(d)}</div>`+(l.length?cards(l,it,nm,dk(d)):'<div class="emp">Slobodan dan</div>')}
     sum='Ukupno '+tot+' '+cas(tot);
   }else{
     const y=cd.getFullYear(),mo=cd.getMonth(),s0=mon(new Date(y,mo,1)),last=new Date(y,mo+1,0);let tot=0;
     $('#day').textContent=cap(MN[mo]);$('#date').textContent=y;
     h='<div class="mg">'+SN.map(x=>`<div class="mh">${x}</div>`).join('');
-    for(let w=0;addD(s0,w*7)<=last;w++)for(let i=0;i<6;i++){const d=addD(s0,w*7+i),inn=d.getMonth()===mo,l=occ(d).filter(o=>!o.gone);if(inn)tot+=l.reduce((s,o)=>s+o.it.n,0);
-      h+=`<button class="mc${inn?'':' o'}${dk(d)===T?' t':''}" data-k="${dk(d)}">${d.getDate()}<div>${l.slice(0,4).map(o=>`<u style="--cc:var(--c${o.it.c||0})"></u>`).join('')}</div></button>`}
+    for(let w=0;addD(s0,w*7)<=last;w++)for(let i=0;i<7;i++){const d=addD(s0,w*7+i),inn=d.getMonth()===mo,l=occ(d).filter(o=>!o.gone);if(inn)tot+=l.reduce((s,o)=>s+o.it.n,0);const xi=l.some(o=>o.it.t==='i'),xk=l.some(o=>o.it.t==='o');
+      h+=`<button class="mc${inn?'':' o'}${dk(d)===T?' t':''}${xi?' ex':xk?' ko':''}" data-k="${dk(d)}">${d.getDate()}<span class="tf">${(xi?'<i class="fb">I</i>':'')+(xk?'<i class="fb k">K</i>':'')}</span><div>${l.slice(0,4).map(o=>`<u style="--cc:var(--c${o.it.c||0})"></u>`).join('')}</div></button>`}
     h+='</div>';sum='Ukupno '+tot+' '+cas(tot);
   }
   $('#sum').textContent=sum;$('#sw').className='sw'+(st.merge?' on':'');
-  $('#tabs').innerHTML=SN.map((s,i)=>{const d=addD(m0,i);return `<button class="tab${wk(cd)===i?' on':''}${dk(d)===T?' td':''}" data-i="${i}">${s}<em>${d.getDate()}</em></button>`}).join('');
+  $('#tabs').innerHTML=SN.map((s,i)=>{const d=addD(m0,i);return `<button class="tab${wk(cd)===i?' on':''}${dk(d)===T?' td':''}" data-i="${i}">${s}<em>${d.getDate()}<span class="tf">${FL(d)}</span></em></button>`}).join('');
   const L=$('#list');L.className=vw==='m'?'mw':'';L.innerHTML=h;
   const key=vw+dk(cd);if(key!==lastK){lastK=key;L.classList.add('f')}
   lists();
@@ -233,7 +275,7 @@ function toast(m,u){$('#tt').textContent=m;undo=u||null;$('#tu').style.display=u
 
 // overlays + back button
 const hideOv=()=>document.querySelectorAll('.ov').forEach(o=>o.classList.remove('show'));
-function openOv(q){hideOv();$(q).classList.add('show');if(!ovP){history.pushState({o:1},'');ovP=true}}
+function openOv(q){hideOv();$('#ts').classList.remove('show');$(q).classList.add('show');if(!ovP){history.pushState({o:1},'');ovP=true}}
 function closeOv(){hideOv();if(ovP){ovP=false;skip++;history.back()}}
 window.addEventListener('popstate',()=>{if(skip){skip--;return}if(ovP){ovP=false;hideOv()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOv()});
@@ -242,7 +284,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOv()});
 // form
 const ch=(a,v,t,on)=>`<button class="chp${on?' on':''}" data-a="${a}" data-v="${v}">${t}</button>`;
 function tpan(f){const g=(a,arr,cur,fmt)=>`<div class="tg" style="grid-template-columns:repeat(6,1fr)">${arr.map(v=>`<button data-a="${a}" data-v="${v}" class="${cur===v?'on':''}">${p2(v)}</button>`).join('')}</div>`;
-  return g('th',[...Array(17)].map((_,i)=>i+6),Math.floor(f.s/60))+`<div class="fl" style="margin:10px 0 0">Minuti</div>`+g('tm',[...Array(12)].map((_,i)=>i*5),f.s%60)}
+  return g('th',[...Array(18)].map((_,i)=>i+6),Math.floor(f.s/60))+`<div class="fl" style="margin:10px 0 0">Minuti</div>`+g('tm',[...Array(12)].map((_,i)=>i*5),f.s%60)}
 function calh(f){const c=f.cm,y=c.getFullYear(),m=c.getMonth(),s0=mon(new Date(y,m,1)),multi=f.mode!=='move'&&f.k==='m',td=dk(new Date());
   let g=['P','U','S','Č','P','S','N'].map(x=>`<i>${x}</i>`).join('');
   for(let i=0;i<42;i++){const d=addD(s0,i),k=dk(d);if(i%7===0&&i>=28&&d.getMonth()!==m)break;
@@ -269,8 +311,13 @@ function fhtml(){const f=F,mv=f.mode==='move',K=f.k,W=!mv&&'wbenpt'.includes(K),
   else if(K==='b')h+=`<div class="fl">Prva nedelja održavanja</div><div class="chips">${df('f','Počinje')}</div>`+calh(f);
   else if(K==='p')h+=`<div class="fl">Period</div><div class="chips">${df('f','Od')}${df('u','Do')}</div>`+calh(f);
   else if(K==='m')h+=`<div class="fl">Datumi održavanja (izabrano: ${f.ds.length})</div>`+calh(f);
-  h+=`<div class="er" id="er"></div><div class="acts">${f.mode==='edit'?'<button class="dl" data-a="del">Obriši</button>':''}<button data-a="x">Otkaži</button><button class="sv" data-a="sv">Sačuvaj</button></div>`;
+  const w=warn(f);h+=(w?`<div class="wn">${w}</div>`:'')+`<div class="er" id="er"></div><div class="acts">${f.mode==='edit'?'<button class="dl" data-a="del">Obriši</button>':''}<button data-a="x">Otkaži</button><button class="sv" data-a="sv">Sačuvaj</button></div>`;
   return h}
+function warn(f){const mv=f.mode==='move',n=mv?f.it.n:f.n,s=f.s,e=s+(n-1)*60+45,K=f.k;let d0=null;
+  if(mv||K==='d')d0=f.dt?pd(f.dt):null;else if(K==='m')d0=f.ds[0]?pd(f.ds[0]):null;else if(K==='t')d0=addD(mon(cd),f.wds[0]);
+  else{const c={k:K,wd:f.wds[0],f:f.f,u:f.u,ex:{},ds:[],dt:''},b=f.f&&f.f>dk(cd)?pd(f.f):cd;for(let i=0;i<60&&!d0;i++){const d=addD(b,i);if(has(c,d))d0=d}}
+  if(!d0)return '';const x=occ(d0).find(o=>!o.gone&&o.it!==f.it&&o.s<e&&s<E0(o));
+  return x?`Preklapa se sa: ${esc(x.it.name)||TY[x.it.t||'p']} (${fm(x.s)}–${fm(E0(x))}) · ${fd(d0)}`:''}
 function drawF(){const sc=$('#fb').scrollTop;$('#fb').innerHTML=fhtml();$('#fb').scrollTop=sc}
 function kinit(){const f=F,w=f.wds[0];
   if(f.k==='b'&&!f.f)f.f=dk(addD(mon(cd),w));if(f.k==='p'&&!f.f)f.f=dk(cd);if(f.k==='d'&&!f.dt)f.dt=dk(cd);
@@ -316,14 +363,19 @@ function act(o){const it=o.it,rec='wbenpm'.includes(it.k),fut='wbenp'.includes(i
    +(fut?B('fu','Izmeni ovaj i sve buduće termine'):'')+B('rp','Dodaj zamenski termin')+B('dl','Obriši ceo termin',1)+B('x','Zatvori');
   openOv('#ov2')}
 $('#list').addEventListener('click',e=>{
+  if(e.target.closest('.lk')){shareLink();return}
   const mc=e.target.closest('.mc');if(mc){cd=fix(pd(mc.dataset.k));vw='d';render();return}
   const r=e.target.closest('.row');if(!r)return;const o=occ(pd(r.dataset.dd)).find(x=>x.it.id===r.dataset.id&&x.k===r.dataset.ok);if(o){o.dd=r.dataset.dd;act(o)}});
 
 // menu, files, sharing
-function menu(){const T=(k,l)=>`<button data-th="${k}" class="${st.theme===k?'on':''}">${l}</button>`,pe=par(T0()),M=(a,t,c)=>`<button class="mb${c?' r':''}" data-act="${a}">${t}</button>`;
-  $('#mb').innerHTML=`<h2>Podešavanja</h2><div class="fl">Tema</div><div class="seg" style="--n:3">${T('auto','Auto')}${T('light','Svetla')}${T('dark','Tamna')}</div>
-  <div class="fl">Ova nedelja je</div><div class="seg"><button data-pw="1" class="${pe?'on':''}">Parna</button><button data-pw="0" class="${pe?'':'on'}">Neparna</button></div>
-  ${M('hd',(st.hd?'✓ ':'')+'Sakrij završene časove (danas)')}${M('sh','Podeli raspored (link)')}${M('ics','Izvezi u kalendar (.ics)')}${M('pr','Štampaj / sačuvaj kao PDF (nedelja)')}${M('exp','Sačuvaj rezervnu kopiju (fajl)')}${M('imp','Vrati iz rezervne kopije')}${M('clr','Obriši sve termine',1)}${M('x','Zatvori')}`;
+function menu(){const pe=par(T0()),T=(k,ic,l)=>`<button data-th="${k}" class="${st.theme===k?'on':''}">${svg(ic)}${l}</button>`,
+  row=(a,ic,t,sb,c)=>`<button class="mr${c?' r':''}" data-act="${a}">${svg(ic)}<span><b>${t}</b>${sb?`<small>${sb}</small>`:''}</span></button>`;
+  $('#mb').innerHTML=`<div class="mh2"><h2>Podešavanja</h2><button class="ib g" data-act="x" aria-label="Zatvori">${svg('x')}</button></div>
+  <div class="ms">Izgled</div><div class="seg th" style="--n:3">${T('auto','half','Auto')}${T('light','sun','Svetla')}${T('dark','moon','Tamna')}</div>
+  <div class="ms">Raspored</div><div class="mg2"><div class="mr"><span><b>Ova nedelja je</b><small>Za naizmeničnu nastavu</small></span><div class="seg2"><button data-pw="1" class="${pe?'on':''}">Parna</button><button data-pw="0" class="${pe?'':'on'}">Neparna</button></div></div>
+  <button class="mr" data-act="hd"><span><b>Sakrij završene časove</b><small>Samo za današnji dan</small></span><i class="tg2${st.hd?' on':''}"></i></button></div>
+  <div class="ms">Podeli i sačuvaj</div><div class="mg2">${row('sh','share','Pošalji raspored','Link koji kolega otvori')}${row('ics','cal','Izvezi u kalendar','.ics za Google ili Apple kalendar')}${row('pr','print','Štampaj / PDF','Prikaz cele nedelje')}${row('exp','down','Rezervna kopija','Sačuva raspored u fajl')}${row('imp','up','Vrati iz kopije','Učitaj sačuvani fajl')}</div>
+  <div class="mg2" style="margin-top:14px">${row('clr','trash','Obriši sve termine','',1)}</div>`;
   openOv('#ov2')}
 async function sendFile(n,mt,txt){const f=new File([txt],n,{type:mt}),ios=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
   if(ios&&navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]})}catch(e){}return}
@@ -362,7 +414,8 @@ $('#fi').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;co
     $('#mb').innerHTML=`<h2>Raspored od kolege</h2><div class="sub" style="margin-bottom:6px">${d.items.length} termina na linku</div><button class="mb" data-act="iz">Zameni moj raspored</button><button class="mb" data-act="id">Dodaj uz moj raspored</button><button class="mb" data-act="x" style="text-align:center">Odbaci</button>`;openOv('#ov2')}catch(e){}
   history.replaceState(null,'',location.pathname)})();
 
-function theme(){st.theme==='auto'?document.documentElement.removeAttribute('data-theme'):document.documentElement.setAttribute('data-theme',st.theme)}
+function theme(){st.theme==='auto'?document.documentElement.removeAttribute('data-theme'):document.documentElement.setAttribute('data-theme',st.theme);$('#thb').innerHTML=svg(st.theme==='auto'?'half':st.theme==='light'?'sun':'moon')}
+$('#thb').onclick=()=>{const o=['auto','light','dark'];st.theme=o[(o.indexOf(st.theme)+1)%3];save();theme();toast('Tema: '+{auto:'automatska',light:'svetla',dark:'tamna'}[st.theme])};
 $('#add').onclick=()=>openForm('new');
 $('#tu').onclick=()=>{if(undo)undo();undo=null;$('#ts').classList.remove('show')};
 $('#td').onclick=()=>{cd=fix(T0());render()};
@@ -374,7 +427,7 @@ document.querySelectorAll('.ab').forEach(b=>b.onclick=()=>step(+b.dataset.s));
 let tx=null;
 document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
 document.addEventListener('touchend',e=>{if(tx===null||document.querySelector('.ov.show'))return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)<70)return;const s=dx>0?-1:1;
-  if(vw==='d'){let d=addD(cd,s);if(wk(d)===6)d=addD(d,s);cd=d;render()}else step(s)},{passive:true});
+  if(vw==='d'){cd=addD(cd,s);render()}else step(s)},{passive:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
 theme();render();setInterval(render,20000);
 if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}
