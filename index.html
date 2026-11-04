@@ -156,6 +156,16 @@ nav{background:var(--navbg);-webkit-backdrop-filter:blur(14px);backdrop-filter:b
 .tg2::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .2s}
 .tg2.on{background:var(--ac)}.tg2.on::after{transform:translateX(15px)}
 .th button{display:flex;align-items:center;justify-content:center;gap:7px}.th .i{width:18px;height:18px}
+.sx{display:flex;align-items:center;gap:8px;flex:none}
+.sx button{width:34px;height:34px;border-radius:50%;border:0;background:var(--card);color:var(--ac);font:700 20px/1 inherit;font-family:inherit;box-shadow:var(--sh)}
+.sx b{min-width:60px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums;display:block}
+.stp{display:flex;justify-content:space-between;align-items:center;margin-top:14px}.stp>span{font-size:13px;font-weight:600;color:var(--mu)}
+.stp .sx button{background:var(--bg);box-shadow:none;border:1.5px solid var(--ln)}
+.tdb{width:40px;height:36px;border-radius:12px;border:0;background:var(--card);color:var(--mu);position:relative;box-shadow:var(--sh);display:grid;place-items:center;transition:background .2s,color .2s}
+.tdb .i{width:24px;height:24px}.tdb span{position:absolute;left:0;right:0;top:16px;text-align:center;font:800 9.5px/1 system-ui,sans-serif}
+.tdb.away{background:var(--ac);color:var(--acb)}
+.nx{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;padding:10px 14px;margin:-6px 0 14px;font-size:14px;box-shadow:var(--sh)}
+.nx b{font-weight:650}.nx span{color:var(--mu)}
 </style></head><body>
 <div class="wrap">
   <header><div><h1 id="day"></h1><div class="sub" id="date"></div></div>
@@ -164,7 +174,7 @@ nav{background:var(--navbg);-webkit-backdrop-filter:blur(14px);backdrop-filter:b
     <button class="ib g" id="mn" aria-label="Podešavanja"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></div></header>
   <div class="seg vs" id="vs" style="--n:3"><button data-v="d">Dan</button><button data-v="w">Nedelja</button><button data-v="m">Mesec</button></div>
   <div id="banner"></div>
-  <div class="bar"><div class="ar"><button class="ab" data-s="-1" aria-label="Nazad">‹</button><button class="pill" id="td">Danas</button><button class="ab" data-s="1" aria-label="Napred">›</button></div><span style="flex:1"></span><button class="sw" id="sw"><span>Spoji u blok</span><i></i></button></div>
+  <div class="bar"><div class="ar"><button class="ab" data-s="-1" aria-label="Nazad">‹</button><button class="pill" id="td" aria-label="Vrati na današnji dan">Danas</button><button class="ab" data-s="1" aria-label="Napred">›</button></div><span style="flex:1"></span><button class="sw" id="sw"><span>Spoji u blok</span><i></i></button></div>
   <div class="sm" id="sum"></div>
   <div id="list"></div>
 </div>
@@ -180,7 +190,8 @@ const MN=['januar','februar','mart','april','maj','jun','jul','avgust','septemba
 const TY={p:'Predavanje',v:'Vežbe',l:'Laboratorija',k:'Konsultacije',o:'Kolokvijum',i:'Ispit',b:'Odbrana',r:'Predaja rada',x:'Ostalo'};
 const IC={half:'<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',print:'<path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="7" rx="1"/>',down:'<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',up:'<path d="M12 16V5M7 9l5-5 5 5M5 20h14"/>',trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>'};
 const svg=n=>`<svg class="i" viewBox="0 0 24 24">${IC[n]}</svg>`;
-const KD={w:'Svake nedelje',b:'Svake 2. nedelje',e:'Parne nedelje',n:'Neparne nedelje',t:'Samo ove nedelje',d:'Tačan datum',p:'Period',m:'Datumi'};
+const ONE='iobr';
+const KD={w:'Svake nedelje',b:'Svake 2. nedelje',e:'Parne nedelje',n:'Neparne nedelje',d:'Tačan datum',p:'Period',m:'Datumi'};
 const KEY='raspored.v1',$=s=>document.querySelector(s);
 const p2=n=>String(n).padStart(2,'0'),fm=m=>p2(Math.floor(m/60))+':'+p2(m%60);
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -195,13 +206,13 @@ const wk=d=>(d.getDay()+6)%7,mon=d=>addD(d,-wk(d)),fd=d=>d.getDate()+'. '+MN[d.g
 const wdiff=(a,b)=>Math.round((mon(a)-mon(b))/6048e5);
 const T0=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
 const iso=d=>{const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));t.setUTCDate(t.getUTCDate()+4-(t.getUTCDay()||7));return Math.ceil(((t-Date.UTC(t.getUTCFullYear(),0,1))/864e5+1)/7)};
-const migrate=a=>a.forEach(i=>{if(i.s==null){i.s=(i.h||8)*60+15;delete i.h}if(!i.k){i.k='w';i.wd=i.d||0;delete i.d;i.t=i.role==='A'?'v':'p'}i.ex=i.ex||{};i.ds=i.ds||[]});
-let st={items:[],merge:true,theme:'auto',hd:false,pw:{m:dk(mon(T0())),e:iso(new Date())%2===0}};
+const migrate=a=>a.forEach(i=>{if(i.s==null){i.s=(i.h||8)*60+15;delete i.h}if(!i.k){i.k='w';i.wd=i.d||0;delete i.d;i.t=i.role==='A'?'v':'p'}if(i.du==null){i.du=45;i.br=15}if(i.k==='t')i.k='d';i.ex=i.ex||{};i.ds=i.ds||[]});
+let st={items:[],merge:true,theme:'auto',hd:false,du:45,br:15,pw:{m:dk(mon(T0())),e:iso(new Date())%2===0}};
 try{const r=localStorage.getItem(KEY);if(r)st=Object.assign(st,JSON.parse(r))}catch(e){}
 migrate(st.items);
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 const par=d=>{const e=st.pw.e;return wdiff(d,pd(st.pw.m))%2===0?e:!e};
-const E0=o=>o.s+(o.it.n-1)*60+45;
+const SD=it=>it.du+it.br,E0=o=>o.s+(o.it.n-1)*SD(o.it)+o.it.du;
 const fix=d=>d;
 const FL=d=>{const l=occ(d).filter(o=>!o.gone);return (l.some(o=>o.it.t==='i')?'<i class="fb">I</i>':'')+(l.some(o=>o.it.t==='o')?'<i class="fb k">K</i>':'')};
 let cd=fix(T0()),vw='d',F=null,AO=null,IMP=null,lastK='',undo=null,tmr,ovP=false,skip=0;
@@ -219,7 +230,7 @@ function occ(d){const k=dk(d),o=[];
       else o.push({it,k,s:e.s??it.s,room:e.r??it.room,mv:1})}
     for(const ok in ex){const e=ex[ok];if(e.d===k&&ok!==k)o.push({it,k:ok,s:e.s??it.s,room:e.r??it.room,mv:1})}});
   return o.sort((a,b)=>a.s-b.s)}
-function groups(L){const g=[];L.forEach(o=>{const l=g[g.length-1],p=l&&l[l.length-1];if(st.merge&&p&&!p.gone&&!o.gone&&p.s+p.it.n*60===o.s)l.push(o);else g.push([o])});return g}
+function groups(L){const g=[];L.forEach(o=>{const l=g[g.length-1],p=l&&l[l.length-1];if(st.merge&&p&&!p.gone&&!o.gone&&p.s+p.it.n*SD(p.it)===o.s)l.push(o);else g.push([o])});return g}
 const lst=(d,isT,nm)=>{let L=occ(d);if(st.hd&&isT)L=L.filter(o=>E0(o)>nm);return L};
 function cards(L,isT,nm,dd){let out='',pe=null;
   groups(L).forEach(g=>{const fx=g.some(o=>!o.gone&&o.it.t==='i'),fk=g.some(o=>!o.gone&&o.it.t==='o'),s=g[0].s,e=E0(g[g.length-1]),cnt=g.reduce((a,o)=>a+(o.gone?0:o.it.n),0),live=isT&&!g[0].gone&&nm>=s&&nm<e;
@@ -232,23 +243,25 @@ function cards(L,isT,nm,dd){let out='',pe=null;
 function bn(all,nm){
   if(!all.length)return '';
   const act=all.find(o=>o.s<=nm&&nm<E0(o));
-  if(act&&((nm-act.s)%60<45)){const end=act.s+Math.floor((nm-act.s)/60)*60+45;
+  const sd=act?SD(act.it):1;if(act&&((nm-act.s)%sd<act.it.du)){const end=act.s+Math.floor((nm-act.s)/sd)*sd+act.it.du;
     return `<div class="banner live"><b>Traje čas · učionica ${esc(act.room)||'?'}</b><span>Završava se u ${fm(end)}, za ${dur(end-nm)}</span></div>`}
-  const nx=act?{s:act.s+(Math.floor((nm-act.s)/60)+1)*60,room:act.room}:all.find(o=>o.s>nm);
+  const nx=act?{s:act.s+(Math.floor((nm-act.s)/sd)+1)*sd,room:act.room}:all.find(o=>o.s>nm);
   if(nx&&nx.s>nm){const brk=act||all.some(o=>E0(o)<=nm);
     return `<div class="banner"><b>${brk?'Pauza · sledeći čas u '+fm(nx.s):'Prvi čas u '+fm(nx.s)}</b><span>Za ${dur(nx.s-nm)} · učionica ${esc(nx.room)||'?'}</span></div>`}
   return `<div class="banner"><b>Gotovo za danas</b><span>Nema više časova.</span></div>`}
 
+function nextEx(nm){for(let i=0;i<60;i++){const d=addD(T0(),i),o=occ(d).find(x=>!x.gone&&(x.it.t==='i'||x.it.t==='o')&&(i>0||E0(x)>nm));
+  if(o){const ex=o.it.t==='i';return `<div class="nx"><i class="fb${ex?'':' k'}">${ex?'I':'K'}</i><div><b>${esc(o.it.name)||TY[o.it.t]}</b><span> · ${i===0?'danas':i===1?'sutra':'za '+i+' '+(i%10===1&&i%100!==11?'dan':'dana')} · ${SN[wk(d)]} ${fd(d)} u ${fm(o.s)}</span></div></div>`}}return ''}
 function render(){
   const now=new Date(),nm=now.getHours()*60+now.getMinutes(),T=dk(now),isT=dk(cd)===T,m0=mon(cd);
   document.querySelectorAll('#vs button').forEach(b=>b.classList.toggle('on',b.dataset.v===vw));
-  $('#nav').hidden=vw!=='d';$('#td').style.visibility=isT?'hidden':'visible';$('#banner').innerHTML='';
+  $('#nav').hidden=vw!=='d';const away=vw==='d'?!isT:vw==='w'?dk(mon(cd))!==dk(mon(now)):(cd.getMonth()!==now.getMonth()||cd.getFullYear()!==now.getFullYear());$('#td').style.visibility=away?'visible':'hidden';$('#banner').innerHTML='';
   let h='',sum='';
   if(vw==='d'){
     $('#day').textContent=DN[wk(cd)];$('#date').innerHTML=cd.getDate()+'. '+MN[cd.getMonth()]+(isT?' · '+fm(nm):'')+FL(cd);
     const all=occ(cd).filter(o=>!o.gone),tot=all.reduce((s,o)=>s+o.it.n,0),l=lst(cd,isT,nm);
     sum=all.length?`${tot} ${cas(tot)} · ${fm(all[0].s)}–${fm(E0(all[all.length-1]))}`:'Nema časova';
-    if(isT)$('#banner').innerHTML=bn(all,nm);
+    if(isT)$('#banner').innerHTML=bn(all,nm)+nextEx(nm);
     const MS=['Nema predavanja ni obaveza. Uživaj u slobodnom danu.','Čist raspored. Odmori se ili nadoknadi gradivo.','Ništa ne piše za ovaj dan. Iskoristi ga kako ti odgovara.'];
     h=l.length?cards(l,isT,nm,dk(cd)):all.length?`<div class="empty"><b>Sve odrađeno</b>Završeni časovi su sakriveni.</div>`:`<div class="empty"><b>Slobodan dan</b>${MS[cd.getDate()%3]}<button class="lk" data-lk="1">Pošalji raspored kolegi →</button></div>`;
   }else if(vw==='w'){
@@ -291,7 +304,7 @@ function calh(f){const c=f.cm,y=c.getFullYear(),m=c.getMonth(),s0=mon(new Date(y
     const on=multi?f.ds.includes(k):f[f.ct]===k;
     g+=`<button class="${d.getMonth()!==m?'o ':''}${k===td?'t ':''}${on?'on':''}" data-a="cd" data-v="${k}">${d.getDate()}</button>`}
   return `<div class="cal"><div class="ch"><button data-a="cm" data-v="-1">‹</button><span>${cap(MN[m])} ${y}</span><button data-a="cm" data-v="1">›</button></div><div class="cg">${g}</div></div>`}
-function fhtml(){const f=F,mv=f.mode==='move',K=f.k,W=!mv&&'wbenpt'.includes(K),n=mv?f.it.n:f.n;
+function fhtml(){const f=F,mv=f.mode==='move',K=f.k,one=!mv&&ONE.includes(f.t),W=!mv&&!one&&'wbenpt'.includes(K),n=mv?f.it.n:f.n,du=mv?f.it.du:f.du,br=mv?f.it.br:f.br;
   let h=`<h2>${{new:'Novi termin',edit:'Izmeni sve termine',future:'Izmeni ovaj i sve buduće',move:'Samo ovaj termin'}[f.mode]}</h2>`;
   const inp=(k,l,ph,ls)=>`<label class="fl">${l}</label><input class="in" data-i="${k}" value="${esc(f[k])}" ${ls?`list="${ls}"`:''} placeholder="${ph}" autocomplete="off">`;
   if(!mv){
@@ -300,11 +313,12 @@ function fhtml(){const f=F,mv=f.mode==='move',K=f.k,W=!mv&&'wbenpt'.includes(K),
     h+=`<div class="fl">Vrsta</div><div class="chips">${Object.entries(TY).map(([k,v])=>ch('ty',k,v,f.t===k)).join('')}</div>`;
     h+=`<div class="g2"><div>${inp('room','Učionica','npr. 204','dr')}</div><div>${inp('g','Grupa','npr. 2')}</div></div>`;
     h+=`<div class="fl">Boja</div><div class="cols">${[0,1,2,3,4,5].map(i=>`<button data-a="cl" data-v="${i}" class="${f.c===i?'on':''}" style="--k:var(--c${i})"></button>`).join('')}</div>`;
-    h+=`<div class="fl">Ponavljanje</div><div class="chips">${Object.entries(KD).map(([k,v])=>ch('kd',k,v,K===k)).join('')}</div>`;
+    if(!one)h+=`<div class="fl">Ponavljanje</div><div class="chips">${Object.entries(KD).map(([k,v])=>ch('kd',k,v,K===k)).join('')}</div>`;
     if(W)h+=`<div class="fl">Dan${f.mode==='new'?' (možeš više)':''}</div><div class="chips">${SN.map((s,i)=>ch('wd',i,s,f.wds.includes(i))).join('')}</div>`;
-    h+=`<div class="fl">Uzastopnih časova (svaki 45 min, pauza 15)</div><div class="chips">${[1,2,3,4,5,6].map(i=>ch('cn',i,i,n===i)).join('')}</div>`;
+    const stp=(k,l,sp)=>`<div class="stp"><span>${l}</span><div class="sx"><button data-a="sp" data-v="${k}:-${sp}">−</button><b>${f[k]} min</b><button data-a="sp" data-v="${k}:${sp}">+</button></div></div>`;
+    h+=one?stp('du','Trajanje',15):`<div class="fl">Uzastopnih časova</div><div class="chips">${[1,2,3,4,5,6].map(i=>ch('cn',i,i,n===i)).join('')}</div>`+stp('du','Trajanje jednog časa',5)+stp('br','Pauza između časova',5);
   }else h+=inp('room','Učionica (samo za ovaj termin)','npr. 204','dr');
-  h+=`<div class="fl">Počinje u</div><button class="tbtn" data-a="tt">${fm(f.s)}<small>do ${fm(f.s+(n-1)*60+45)} · dodirni za izmenu</small></button>${f.tp?tpan(f):''}`;
+  h+=`<div class="fl">Počinje u</div><button class="tbtn" data-a="tt">${fm(f.s)}<small>do ${fm(f.s+(n-1)*(du+br)+du)} · dodirni za izmenu</small></button>${f.tp?tpan(f):''}`;
   const df=(k,l)=>ch('ct',k,`${l}: ${f[k]?fd(pd(f[k])):'izaberi'}`,f.ct===k);
   if(mv)h+=`<div class="fl">Datum</div>`+calh(f);
   else if(K==='d')h+=`<div class="fl">Datum</div>`+calh(f);
@@ -313,7 +327,7 @@ function fhtml(){const f=F,mv=f.mode==='move',K=f.k,W=!mv&&'wbenpt'.includes(K),
   else if(K==='m')h+=`<div class="fl">Datumi održavanja (izabrano: ${f.ds.length})</div>`+calh(f);
   const w=warn(f);h+=(w?`<div class="wn">${w}</div>`:'')+`<div class="er" id="er"></div><div class="acts">${f.mode==='edit'?'<button class="dl" data-a="del">Obriši</button>':''}<button data-a="x">Otkaži</button><button class="sv" data-a="sv">Sačuvaj</button></div>`;
   return h}
-function warn(f){const mv=f.mode==='move',n=mv?f.it.n:f.n,s=f.s,e=s+(n-1)*60+45,K=f.k;let d0=null;
+function warn(f){const mv=f.mode==='move',n=mv?f.it.n:f.n,du=mv?f.it.du:f.du,br=mv?f.it.br:f.br,s=f.s,e=s+(n-1)*(du+br)+du,K=f.k;let d0=null;
   if(mv||K==='d')d0=f.dt?pd(f.dt):null;else if(K==='m')d0=f.ds[0]?pd(f.ds[0]):null;else if(K==='t')d0=addD(mon(cd),f.wds[0]);
   else{const c={k:K,wd:f.wds[0],f:f.f,u:f.u,ex:{},ds:[],dt:''},b=f.f&&f.f>dk(cd)?pd(f.f):cd;for(let i=0;i<60&&!d0;i++){const d=addD(b,i);if(has(c,d))d0=d}}
   if(!d0)return '';const x=occ(d0).find(o=>!o.gone&&o.it!==f.it&&o.s<e&&s<E0(o));
@@ -325,15 +339,16 @@ function kinit(){const f=F,w=f.wds[0];
 function openForm(mode,o,add){
   const it=o&&o.it,dd=o?o.dd:dk(cd);
   if(mode==='new'){const l=occ(cd).filter(x=>!x.gone),z=l[l.length-1];
-    F={mode,name:'',teacher:'',room:'',role:'P',t:'p',g:'',c:0,k:'w',wds:[wk(cd)],n:1,s:z?Math.min(1260,E0(z)+15):495,f:'',u:'',dt:dk(cd),ds:[]};
-    if(add)Object.assign(F,{name:it.name,teacher:it.teacher||'',room:o.room,role:it.role,t:it.t||'p',g:it.g||'',c:it.c||0,n:it.n,s:o.s,k:'d',dt:dd})}
+    F={mode,name:'',teacher:'',room:'',role:'P',t:'p',g:'',c:0,k:'w',wds:[wk(cd)],n:1,s:z?Math.min(1260,E0(z)+z.it.br):495,f:'',u:'',dt:dk(cd),ds:[],du:st.du,br:st.br};
+    if(add)Object.assign(F,{name:it.name,teacher:it.teacher||'',room:o.room,role:it.role,t:it.t||'p',g:it.g||'',c:it.c||0,n:it.n,s:o.s,k:'d',dt:dd,du:it.du,br:it.br})}
   else if(mode==='move')F={mode,it,k0:o.k,dt:dd,s:o.s,room:o.room||'',k:it.k,ds:[]};
-  else F={mode,it,k0:o.k,name:it.name||'',teacher:it.teacher||'',room:it.room||'',role:it.role,t:it.t||'p',g:it.g||'',c:it.c||0,k:it.k,wds:[it.wd??wk(pd(dd))],n:it.n,s:it.s,f:it.f||'',u:it.u||'',dt:it.dt||dd,ds:[...it.ds]};
+  else F={mode,it,k0:o.k,name:it.name||'',teacher:it.teacher||'',room:it.room||'',role:it.role,t:it.t||'p',g:it.g||'',c:it.c||0,k:it.k,wds:[it.wd??wk(pd(dd))],n:it.n,s:it.s,f:it.f||'',u:it.u||'',dt:it.dt||dd,ds:[...it.ds],du:it.du,br:it.br};
+  if(mode!=='move'&&ONE.includes(F.t)&&F.k!=='d'){F.k='d';F.n=1;F.dt=dd}
   F.tp=false;F.ct=mode==='move'||F.k==='d'||F.k==='t'?'dt':'f';F.cm=pd(F[F.ct]||dd);if(!F.cm.getTime)F.cm=new Date();
   drawF();openOv('#ov');$('#fb').scrollTop=0}
 $('#fb').addEventListener('input',e=>{const k=e.target.dataset.i;if(k)F[k]=e.target.value});
 $('#fb').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,v=b.dataset.v,f=F;
-  if(a==='ro')f.role=v;else if(a==='ty')f.t=v;else if(a==='cl')f.c=+v;else if(a==='kd'){f.k=v;kinit()}
+  if(a==='ro')f.role=v;else if(a==='ty'){const was=ONE.includes(f.t);f.t=v;const now=ONE.includes(v);if(now&&!was){f.k='d';f.n=1;f.du=90;f.br=0;kinit()}else if(!now&&was){f.k='w';f.du=st.du;f.br=st.br;kinit()}}else if(a==='sp'){const[q,x]=v.split(':'),lo=q==='du'?15:0,hi=q==='du'?300:60;f[q]=Math.max(lo,Math.min(hi,f[q]+ +x))}else if(a==='cl')f.c=+v;else if(a==='kd'){f.k=v;kinit()}
   else if(a==='wd'){const i=+v;f.wds=f.mode==='new'?(f.wds.includes(i)?(f.wds.length>1?f.wds.filter(x=>x!==i):f.wds):[...f.wds,i]):[i]}
   else if(a==='cn')f.n=+v;else if(a==='tt')f.tp=!f.tp;else if(a==='th')f.s=+v*60+f.s%60;else if(a==='tm')f.s=Math.floor(f.s/60)*60+ +v;
   else if(a==='ct'){f.ct=v;f.cm=pd(f[v]||dk(cd))}else if(a==='cm')f.cm=new Date(f.cm.getFullYear(),f.cm.getMonth()+ +v,1);
@@ -345,8 +360,8 @@ function saveF(){const f=F,K=f.k,er=m=>{$('#er').textContent=m};
   if(f.mode==='move'){if(!f.dt)return er('Izaberi datum.');const it=f.it;it.ex[f.k0]={d:f.dt,s:f.s,r:f.room.trim()};save();buzz();closeOv();render();return}
   if(K==='d'&&!f.dt)return er('Izaberi datum.');if(K==='m'&&!f.ds.length)return er('Izaberi bar jedan datum.');
   if(K==='b'&&!f.f)return er('Izaberi prvu nedelju.');if(K==='p'&&(!f.f||!f.u||f.f>f.u))return er('Izaberi ispravan period (Od, Do).');
-  if(f.s+(f.n-1)*60+45>1440)return er('Čas ne može da pređe ponoć.');
-  const base={name:f.name.trim(),teacher:f.teacher.trim(),room:f.room.trim(),role:f.role,t:f.t,g:f.g.trim(),c:f.c,s:f.s,n:f.n,k:K};
+  if(f.s+(f.n-1)*(f.du+f.br)+f.du>1440)return er('Čas ne može da pređe ponoć.');
+  const base={name:f.name.trim(),teacher:f.teacher.trim(),room:f.room.trim(),role:f.role,t:f.t,g:f.g.trim(),c:f.c,s:f.s,n:ONE.includes(f.t)?1:f.n,du:f.du,br:f.br,k:K};
   const wdk='wbenpt'.includes(K),m0=mon(cd),wl=wdk?f.wds:[0];
   const mk=(wd,x)=>Object.assign({id:uid(),ex:{},ds:[],f:'',u:'',dt:'',wd},base,K==='t'?{dt:dk(addD(m0,wd))}:{},K==='d'?{dt:f.dt}:{},K==='m'?{ds:f.ds}:{},K==='b'||K==='p'?{f:f.f}:{},K==='p'?{u:f.u}:{},x);
   if(f.mode==='new'){wl.forEach(wd=>st.items.push(mk(wd)));if(K==='d')cd=fix(pd(f.dt));else if(wdk&&wl.length===1&&vw==='d')cd=addD(m0,wl[0])}
@@ -359,7 +374,7 @@ function saveF(){const f=F,K=f.k,er=m=>{$('#er').textContent=m};
 // action sheet for an occurrence
 function act(o){const it=o.it,rec='wbenpm'.includes(it.k),fut='wbenp'.includes(it.k),B=(a,t,c)=>`<button class="mb${c?' r':''}" data-a="${a}">${t}</button>`;
   AO=o;$('#mb').innerHTML=`<h2>${esc(it.name)||TY[it.t||'p']}</h2><div class="sub" style="margin-bottom:6px">${fd(pd(o.dd))} · ${fm(o.s)} · ${esc(o.room)||'bez učionice'}</div>`
-   +B('ed',rec?'Izmeni sve termine':'Izmeni')+(rec?B('mv','Pomeri / promeni učionicu samo za ovaj termin')+B('cx',o.gone==='Otkazano'?'Vrati otkazani termin':'Otkaži samo ovaj termin'):'')
+   +B('ed',rec?'Izmeni sve termine':'Izmeni')+(rec?B('mv','Pomeri / promeni učionicu samo za ovaj termin')+((o.gone||o.mv)?B('rs','Poništi izmenu (vrati prvobitni termin)'):'')+(o.gone?'':B('cx','Otkaži samo ovaj termin')):'')
    +(fut?B('fu','Izmeni ovaj i sve buduće termine'):'')+B('rp','Dodaj zamenski termin')+B('dl','Obriši ceo termin',1)+B('x','Zatvori');
   openOv('#ov2')}
 $('#list').addEventListener('click',e=>{
@@ -373,6 +388,8 @@ function menu(){const pe=par(T0()),T=(k,ic,l)=>`<button data-th="${k}" class="${
   $('#mb').innerHTML=`<div class="mh2"><h2>Podešavanja</h2><button class="ib g" data-act="x" aria-label="Zatvori">${svg('x')}</button></div>
   <div class="ms">Izgled</div><div class="seg th" style="--n:3">${T('auto','half','Auto')}${T('light','sun','Svetla')}${T('dark','moon','Tamna')}</div>
   <div class="ms">Raspored</div><div class="mg2"><div class="mr"><span><b>Ova nedelja je</b><small>Za naizmeničnu nastavu</small></span><div class="seg2"><button data-pw="1" class="${pe?'on':''}">Parna</button><button data-pw="0" class="${pe?'':'on'}">Neparna</button></div></div>
+  <div class="mr"><span><b>Trajanje časa</b><small>Podrazumevano za nove termine</small></span><div class="sx"><button data-stp="du:-5">−</button><b>${st.du} min</b><button data-stp="du:5">+</button></div></div>
+  <div class="mr"><span><b>Pauza</b><small>Između uzastopnih časova</small></span><div class="sx"><button data-stp="br:-5">−</button><b>${st.br} min</b><button data-stp="br:5">+</button></div></div>
   <button class="mr" data-act="hd"><span><b>Sakrij završene časove</b><small>Samo za današnji dan</small></span><i class="tg2${st.hd?' on':''}"></i></button></div>
   <div class="ms">Podeli i sačuvaj</div><div class="mg2">${row('sh','share','Pošalji raspored','Link koji kolega otvori')}${row('ics','cal','Izvezi u kalendar','.ics za Google ili Apple kalendar')}${row('pr','print','Štampaj / PDF','Prikaz cele nedelje')}${row('exp','down','Rezervna kopija','Sačuva raspored u fajl')}${row('imp','up','Vrati iz kopije','Učitaj sačuvani fajl')}</div>
   <div class="mg2" style="margin-top:14px">${row('clr','trash','Obriši sve termine','',1)}</div>`;
@@ -391,10 +408,11 @@ async function shareLink(){try{const u=location.origin+location.pathname+'#r='+a
 $('#mn').onclick=menu;
 $('#mb').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
   if(d.th){st.theme=d.th;save();theme();menu();return}
+  if(d.stp){const[q,x]=d.stp.split(':'),lo=q==='du'?15:0,hi=q==='du'?300:60;st[q]=Math.max(lo,Math.min(hi,st[q]+ +x));save();menu();return}
   if(d.pw){st.pw={m:dk(mon(T0())),e:d.pw==='1'};save();menu();render();return}
   if(d.a){const o=AO,it=o.it;
     if(d.a==='ed')openForm('edit',o);else if(d.a==='mv')openForm('move',o);else if(d.a==='fu')openForm('future',o);else if(d.a==='rp')openForm('new',o,1);
-    else if(d.a==='cx'){if(o.gone==='Otkazano')delete it.ex[o.k];else it.ex[o.k]={x:1};save();closeOv();render()}
+    else if(d.a==='cx'){it.ex[o.k]={x:1};save();closeOv();render()}else if(d.a==='rs'){delete it.ex[o.k];save();closeOv();render()}
     else if(d.a==='dl')delIt(it);else closeOv();return}
   const a=d.act;if(!a)return;
   if(a==='x')closeOv();
@@ -409,10 +427,9 @@ $('#mb').addEventListener('click',async e=>{const b=e.target.closest('button');i
 $('#fi').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
   r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.items))throw 0;
     if(confirm('Zameniti trenutni raspored sa ovom kopijom?')){st=Object.assign(st,d);migrate(st.items);save();theme();closeOv();render();toast('Raspored vraćen')}}catch(x){toast('Fajl nije ispravna kopija rasporeda')}e.target.value=''};r.readAsText(f)});
-(async()=>{const m=/^#r=(.+)$/.exec(location.hash);if(!m)return;
+(async()=>{const m=/^#r=(.+)$/.exec(location.hash);if(!m)return;history.replaceState(null,'',location.pathname);
   try{const d=await unpack(m[1]);if(!Array.isArray(d.items))throw 0;migrate(d.items);IMP=d.items;
-    $('#mb').innerHTML=`<h2>Raspored od kolege</h2><div class="sub" style="margin-bottom:6px">${d.items.length} termina na linku</div><button class="mb" data-act="iz">Zameni moj raspored</button><button class="mb" data-act="id">Dodaj uz moj raspored</button><button class="mb" data-act="x" style="text-align:center">Odbaci</button>`;openOv('#ov2')}catch(e){}
-  history.replaceState(null,'',location.pathname)})();
+    $('#mb').innerHTML=`<h2>Raspored od kolege</h2><div class="sub" style="margin-bottom:6px">${d.items.length} termina na linku</div><button class="mb" data-act="iz">Zameni moj raspored</button><button class="mb" data-act="id">Dodaj uz moj raspored</button><button class="mb" data-act="x" style="text-align:center">Odbaci</button>`;openOv('#ov2')}catch(e){}})();
 
 function theme(){st.theme==='auto'?document.documentElement.removeAttribute('data-theme'):document.documentElement.setAttribute('data-theme',st.theme);$('#thb').innerHTML=svg(st.theme==='auto'?'half':st.theme==='light'?'sun':'moon')}
 $('#thb').onclick=()=>{const o=['auto','light','dark'];st.theme=o[(o.indexOf(st.theme)+1)%3];save();theme();toast('Tema: '+{auto:'automatska',light:'svetla',dark:'tamna'}[st.theme])};
@@ -430,5 +447,6 @@ document.addEventListener('touchend',e=>{if(tx===null||document.querySelector('.
   if(vw==='d'){cd=addD(cd,s);render()}else step(s)},{passive:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
 theme();render();setInterval(render,20000);
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
 if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}
 </script></body></html>
